@@ -1,6 +1,7 @@
 package mk.hiberate.client;
 
 import mk.hiberate.entity.Address;
+import mk.hiberate.entity.Status;
 import mk.hiberate.entity.Student;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -25,7 +26,7 @@ public class StudentTest {
 
             session.beginTransaction();
 
-            Student tempStudent = new Student("John", "Doe", "email@emai.com");
+            Student tempStudent = new Student("John", "Doe", "email@emai.com", Status.ACTIVE);
             Set<String> images = new HashSet<String>();
             images.add("photo1.jpg");
             images.add("photo2.jpg");
@@ -40,7 +41,11 @@ public class StudentTest {
             tempStudent.setHomeAddress(address);
             tempStudent.setBillingAddress(billingAddress);
 
+            Student tempStudent2 = new Student("Hary", "Lary", "email2@emai.com", Status.INACTIVE);
+
+
             session.persist(tempStudent);
+            session.persist(tempStudent2);
 
             session.getTransaction().commit();
             System.out.println("Done... !!! ");
@@ -59,8 +64,10 @@ public class StudentTest {
 
             Student student = session1.get(Student.class, 1L);
             System.out.println(student);
-            System.out.println(student.getHomeAddress());
-            System.out.println(student.getBillingAddress());
+
+            Student student2 = session1.get(Student.class, 2L);
+            System.out.println(student2);
+
 
             session1.getTransaction().commit();
         }catch (Exception e){

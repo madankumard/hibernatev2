@@ -37,13 +37,17 @@ public class Student {
     @Column(name = "file_name")
     private Set<String> images = new HashSet<String>();
 
+    @Enumerated(value = EnumType.STRING)
+    private Status status;
+
     public Student() {
     }
 
-    public Student(String firstName, String lastName, String email) {
+    public Student(String firstName, String lastName, String email, Status status) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.status = status;
     }
 
     public String getFirstName() {
@@ -94,6 +98,14 @@ public class Student {
         this.billingAddress = billingAddress;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "Student{" +
@@ -101,6 +113,10 @@ public class Student {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
+                ", homeAddress=" + homeAddress +
+                ", billingAddress=" + billingAddress +
+                ", images=" + images +
+                ", status=" + status +
                 '}';
     }
 }

@@ -1,5 +1,7 @@
 package mk.hiberate.entity;
 
+import org.hibernate.annotations.SortComparator;
+
 import javax.persistence.*;
 import java.util.*;
 
@@ -23,8 +25,9 @@ public class Student5 {
     @CollectionTable(name = "image")
     @MapKeyColumn(name = "file_name") // Maps key
     //@OrderBy // defaults to @MapKeyColumn
-    @OrderBy("file_name desc") // defaults to @MapKeyColumn
+    //@OrderBy("file_name desc") // defaults to @MapKeyColumn
     @Column(name = "image_name") // Maps Value
+    @SortComparator(ReverseStringComparator.class)
     //private Map<String, String> images = new LinkedHashMap<String, String>();
     private SortedMap<String, String> images = new TreeMap<String, String>();
 
@@ -35,6 +38,13 @@ public class Student5 {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+    }
+
+    //Reverse String
+    public static class ReverseStringComparator implements Comparator<String>{
+        public int compare(String o1, String o2) {
+            return o2.compareTo(o1);
+        }
     }
 
     public String getFirstName() {

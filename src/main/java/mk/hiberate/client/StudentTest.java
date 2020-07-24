@@ -1,5 +1,6 @@
 package mk.hiberate.client;
 
+import mk.hiberate.entity.Address;
 import mk.hiberate.entity.Student;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -15,6 +16,7 @@ public class StudentTest {
         SessionFactory sessionFactory = new Configuration()
                 .configure("hibernate.cfg.xml")
                 .addAnnotatedClass(Student.class)
+                .addAnnotatedClass(Address.class)
                 .buildSessionFactory();
 
         Session session = sessionFactory.openSession();
@@ -33,6 +35,9 @@ public class StudentTest {
             images.add("photo6.jpg");
             tempStudent.setImages(images);
 
+            Address address = new Address("Street 1", "city 1", "zp1");
+            tempStudent.setAddress(address);
+
             session.persist(tempStudent);
 
             session.getTransaction().commit();
@@ -43,6 +48,23 @@ public class StudentTest {
             session.getTransaction().rollback();
         } finally {
             if(session != null) session.close();
+        }
+
+        Session session1 = sessionFactory.openSession();
+
+        try{
+            session1.beginTransaction();
+
+            Student student = session1.get(Student.class, 1L);
+            System.out.println(student);
+            System.out.println(student.getAddress());
+
+            session1.getTransaction().commit();
+        }catch (Exception e){
+            e.printStackTrace();
+            session1.getTransaction().rollback();
+        }finally {
+            session1.close();
         }
     }
 }

@@ -20,6 +20,9 @@ public class Student {
 
     private String email;
 
+    @Embedded
+    private Address address;
+
     @ElementCollection
     @CollectionTable(name = "image",
             joinColumns = @JoinColumn(name = "student_id"))
@@ -65,6 +68,14 @@ public class Student {
 
     public void setImages(Set<String> images) {
         this.images = images;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     @Override

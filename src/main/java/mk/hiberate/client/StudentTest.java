@@ -36,7 +36,9 @@ public class StudentTest {
             tempStudent.setImages(images);
 
             Address address = new Address("Street 1", "city 1", "zp1");
-            tempStudent.setAddress(address);
+            Address billingAddress = new Address("Street 2", "city 2", "zp2");
+            tempStudent.setHomeAddress(address);
+            tempStudent.setBillingAddress(billingAddress);
 
             session.persist(tempStudent);
 
@@ -57,7 +59,8 @@ public class StudentTest {
 
             Student student = session1.get(Student.class, 1L);
             System.out.println(student);
-            System.out.println(student.getAddress());
+            System.out.println(student.getHomeAddress());
+            System.out.println(student.getBillingAddress());
 
             session1.getTransaction().commit();
         }catch (Exception e){

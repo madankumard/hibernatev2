@@ -21,7 +21,15 @@ public class Student {
     private String email;
 
     @Embedded
-    private Address address;
+    private Address homeAddress;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "street", column = @Column(name = "billing_street")),
+            @AttributeOverride(name = "city", column = @Column(name = "billing_city")),
+            @AttributeOverride(name = "zipcode", column = @Column(name = "billing_zipcode"))
+    })
+    private Address billingAddress;
 
     @ElementCollection
     @CollectionTable(name = "image",
@@ -70,12 +78,20 @@ public class Student {
         this.images = images;
     }
 
-    public Address getAddress() {
-        return address;
+    public Address getHomeAddress() {
+        return homeAddress;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setHomeAddress(Address homeAddress) {
+        this.homeAddress = homeAddress;
+    }
+
+    public Address getBillingAddress() {
+        return billingAddress;
+    }
+
+    public void setBillingAddress(Address billingAddress) {
+        this.billingAddress = billingAddress;
     }
 
     @Override
